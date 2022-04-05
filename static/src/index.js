@@ -1,9 +1,12 @@
+import Phaser from 'phaser';
+import { io } from "socket.io-client";
+
 const config = {
     type: Phaser.AUTO,
     parent: 'phaser-example',
     width: 800,
     height: 600,
-    backgroundColor: '#ffffff',
+    backgroundColor: '#000',
     physics: {
       default: 'arcade',
       arcade: {
@@ -21,12 +24,25 @@ const config = {
 const game = new Phaser.Game(config);
 
 function create() {
-    const self = this;
-    const socket = io()
+    const canva = this;
+
+     const socket = io(
+        'http://localhost:3000'
+     )
     socket.on('connect', () => {
         console.log('connected')
-        console.log(self)
+
     })
+    const logo = canva.add.image(400, 150, 'logo');
+      
+    canva.tweens.add({
+        targets: logo,
+        y: 450,
+        duration: 2000,
+        ease: "Power2",
+        yoyo: true,
+        loop: -1
+    });
   
 }
 function preload() {}

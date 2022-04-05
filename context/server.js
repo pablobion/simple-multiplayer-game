@@ -22,5 +22,4 @@ const Players = (action) => {
     return playersActions[action] || playersActions.actives;
 }
 
-
 module.exports = { Players }
