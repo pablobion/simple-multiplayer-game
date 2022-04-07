@@ -8,15 +8,30 @@ const Players = (action) => {
      */
 
     const createOrRemovePlayer = (player = {}, type) => {
-        if(!type || !player.id || !player.name) return needsParams('type', 'player.name', 'player.id')
+        if(!type || !player.id || type === 'create' && !player.name) return needsParams('type', 'player.name', 'player.id')
         type === 'create' ? playersList[player.id] = player : delete playersList[player.id];
         return `${type} player: ${player.name} id: ${player.id}`;
     } 
 
+    const createStruturePlayer = ({id, name}) => {
+        return {
+            id,
+            name,
+            x: 30,
+            y: 30,
+            direction: 'right',
+            speed: 1,
+            isMoving: false,
+            isShooting: false,
+            isDead: false,  
+        }
+    }
+
+    
     const playersActions = {
         actives: () => playersList,
-        create: (player) => console.log(createOrRemovePlayer(player, 'create')),
-        remove:  (player) => createOrRemovePlayer(player, 'remove'),
+        create: ({id, name}) => createOrRemovePlayer(createStruturePlayer({id, name}), 'create'),
+        remove: ({id}) => createOrRemovePlayer({id}, 'remove'),
     }
 
     return playersActions[action] || playersActions.actives;
