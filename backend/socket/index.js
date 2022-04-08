@@ -4,13 +4,16 @@ const {Players} = require('../context/players')
 const connections = (io) => {
     io.on('connection', (socket) => {
         console.log(log({message: `User: ${socket.id} connected`}))
-        Players('create')({name: 'pablo', id: socket.id})
-        console.log(Players('actives')())
+        const playerCreated = Players('create')({name: 'pablo', id: socket.id})
+
+        socket.emit("currentPlayers", Players('actives')());
+
+        socket.broadcast.emit('newPlayerConnected', playerCreated);
 
         socket.on('disconnect', () => {
             console.log(log({message: `User: ${socket.id} disconnected`}))
             Players('remove')({id: socket.id})
-            console.log(Players('actives')())
+            io.emit("playerDisconnected", socket.id)
         })
     })
 }

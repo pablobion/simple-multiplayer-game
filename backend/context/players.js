@@ -10,15 +10,15 @@ const Players = (action) => {
     const createOrRemovePlayer = (player = {}, type) => {
         if(!type || !player.id || type === 'create' && !player.name) return needsParams('type', 'player.name', 'player.id')
         type === 'create' ? playersList[player.id] = player : delete playersList[player.id];
-        return `${type} player: ${player.name} id: ${player.id}`;
+        return playersList[player.id];
     } 
 
     const createStruturePlayer = ({id, name}) => {
         return {
             id,
             name,
-            x: 30,
-            y: 30,
+            x: Math.floor(Math.random() *100)+400,
+            y: Math.floor(Math.random() *500),
             direction: 'right',
             speed: 1,
             isMoving: false,
