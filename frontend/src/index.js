@@ -55,7 +55,10 @@ function create() {
       playerActions.createOthersPlayers(player);
     })
 
-    self.socket.on('playerDisconnected', (playerId) => playerActions.destroyPlayer(playerId));
+    self.socket.on('playerDisconnected', (playerId) => {
+      console.log(self.textGroup.children)
+      playerActions.destroyPlayer(playerId)
+    });
 
     self.socket.on('playerSays', (player) => {
   
