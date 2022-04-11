@@ -6,7 +6,8 @@
   "license": "MIT",
   "scripts": {
     "build": "webpack --config webpack/prod.js ",
-    "start": "webpack-dev-server --config webpack/base.js --open"
+    "start2": "webpack-dev-server --config webpack/base.js --open",
+    "start": "webpack-dev-server --config webpack/base.js --host 127.0.0.1 --port 80"
   },
   "devDependencies": {
     "@babel/core": "^7.17.8",

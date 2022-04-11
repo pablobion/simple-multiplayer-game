@@ -32,6 +32,8 @@ const Players = (action) => {
         actives: () => playersList,
         create: ({id, name}) => createOrRemovePlayer(createStruturePlayer({id, name}), 'create'),
         remove: ({id}) => createOrRemovePlayer({id}, 'remove'),
+        get: (id) => playersList[id]
+
     }
 
     return playersActions[action] || playersActions.actives;

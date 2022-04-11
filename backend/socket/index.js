@@ -7,6 +7,7 @@ const connections = (io) => {
         const playerCreated = Players('create')({name: 'pablo', id: socket.id})
 
         socket.emit("currentPlayers", Players('actives')());
+        io.emit("playerSays", Players('get')(socket.id))
 
         socket.broadcast.emit('newPlayerConnected', playerCreated);
 
