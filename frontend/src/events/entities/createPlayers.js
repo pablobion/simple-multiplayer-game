@@ -14,7 +14,9 @@ const PlayerActions = (self) => {
     const createPlayer = (player) => {
         //create local player
         const playerObj = new Phaser.GameObjects.Sprite(self, player.x, player.y, 'ship').setOrigin(0.5, 0.5).setDisplaySize(53, 40)
-        self.add.existing(playerObj)
+        const playerAdd = self.add.existing(playerObj)
+        playerAdd.id = player.id
+        self.otherPlayers.add(playerAdd); 
 
         const name = createName(player)
         self.textGroup.add(name)
@@ -25,15 +27,19 @@ const PlayerActions = (self) => {
         //create other players
         const otherPlayer = self.add.sprite(player.x, player.y, 'ship').setOrigin(0.5, 0.5).setDisplaySize(53, 40);
         otherPlayer.id = player.id;
-        self.otherPlayers.add(otherPlayer);   
+        self.otherPlayers.add(otherPlayer);  
+        
+        otherPlayer.setInteractive();
+
+        otherPlayer.on('pointerdown', (elem) => {otherPlayer.setTint(0xB95022)})
 
         const name = createName(player)
         self.textGroup.add(name)
     }
 
     const destroyPlayer = (playerId) => {
-        self.otherPlayers.getChildren().find(player => player.id === playerId).destroy();
-        self.textGroup.getChildren().find(player => player.id === playerId).destroy();
+        const groups = ['otherPlayers', 'textGroup']
+        groups.forEach(element => self[element].getChildren().find(player => player.id === playerId).destroy());
     }
 
     return {

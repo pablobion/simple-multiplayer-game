@@ -1,6 +1,13 @@
 import Phaser, { Plugins } from 'phaser';
-import { io } from "socket.io-client";
-import {PlayerActions} from "./events/entities/createPlayers"
+
+//connections
+import ConnectionWithServer from "./connection/index"
+
+//groups sprites
+import CreateGroupsPhaser from "./groups/index"
+
+//actions 
+import playerMovement from './events/actions/playerMovement'
 
 const config = {
     type: Phaser.AUTO,
@@ -38,35 +45,25 @@ function preload() {
 
 function create() {
   const self = this;
-  self.socket = io( 'http://localhost:3000' );
-  self.otherPlayers = this.physics.add.group();
-  self.textGroup = this.add.group();
-
   //start the game
-  const playerActions = PlayerActions(self)
 
-    self.socket.on('connect', () => console.log('connected'))
-
-    self.socket.on('currentPlayers', (players) => {
-      Object.keys(players).find(id => id === self.socket.id ? playerActions.createPlayer(players[id]) : playerActions.createOthersPlayers(players[id]))
-    })
-
-    self.socket.on('newPlayerConnected', (player) => {
-      playerActions.createOthersPlayers(player);
-    })
-
-    self.socket.on('playerDisconnected', (playerId) => {
-      console.log(self.textGroup.children)
-      playerActions.destroyPlayer(playerId)
-    });
-
-    self.socket.on('playerSays', (player) => {
   
-      
-    })
+  CreateGroupsPhaser(self) //create group of sprites and object game
+  ConnectionWithServer(self) //connection to the server
+  playerMovement(self)
+
+
   
 }
 
-function update() {}
+function update() {
+  const self = this;
+ 
+  const teste = self.textGroup.getChildren()
+  teste.forEach(elem => {
+    const player = self.otherPlayers.getChildren().find(player => player.id === elem.id)
+    elem.setPosition(player.x, player.y).setOrigin(0.5,3)
+  })
+}
 
 
