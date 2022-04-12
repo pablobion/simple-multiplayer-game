@@ -11,29 +11,19 @@ const PlayerActions = (self) => {
         return nameObj
     }
 
-    const createPlayer = (player) => {
-        //create local player
-        const playerObj = new Phaser.GameObjects.Sprite(self, player.x, player.y, 'ship').setOrigin(0.5, 0.5).setDisplaySize(53, 40)
-        const playerAdd = self.add.existing(playerObj)
-        playerAdd.id = player.id
-        self.otherPlayers.add(playerAdd); 
+    const findPlayerSprite = (playerId) => self.otherPlayers.getChildren().find(player => player.id === playerId)
 
-        const name = createName(player)
-        self.textGroup.add(name)
-        
-    }
-
-    const createOthersPlayers = (player) => {
+    const createPlayer = (playerData) => {
         //create other players
-        const otherPlayer = self.add.sprite(player.x, player.y, 'ship').setOrigin(0.5, 0.5).setDisplaySize(53, 40);
-        otherPlayer.id = player.id;
-        self.otherPlayers.add(otherPlayer);  
+        const player = self.add.sprite(playerData.x, playerData.y, 'ship').setOrigin(0.5, 0.5).setDisplaySize(53, 40);
+        player.id = playerData.id;
+        self.otherPlayers.add(player);  
         
-        otherPlayer.setInteractive();
+        player.setInteractive();
 
-        otherPlayer.on('pointerdown', (elem) => {otherPlayer.setTint(0xB95022)})
+        player.on('pointerdown', (elem) => {player.setTint(0xB95022)})
 
-        const name = createName(player)
+        const name = createName(playerData)
         self.textGroup.add(name)
     }
 
@@ -44,10 +34,10 @@ const PlayerActions = (self) => {
 
     return {
         createPlayer, 
-        createOthersPlayers,
-        destroyPlayer
+        destroyPlayer,
+        findPlayerSprite
     }
 }
 
 
-module.exports = { PlayerActions }
+module.exports = PlayerActions 

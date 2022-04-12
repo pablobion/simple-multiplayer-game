@@ -1,5 +1,5 @@
 //actions
-import {PlayerActions} from "../../events/entities/createPlayers"
+import PlayerActions from "../../events/entities/createPlayers"
 import CreateGroupsPhaser from "../../groups/index"
 
 export default (self) => {
@@ -11,26 +11,19 @@ export default (self) => {
     socket.on('connect', () => console.log('connected'))
 
     //return list of players
-    socket.on('currentPlayers', (players) => { 
-        Object.keys(players).find(id => id === self.socket.id ? playerActions.createPlayer(players[id]) : playerActions.createOthersPlayers(players[id]))
-    })
+    socket.on('currentPlayers', (players) => Object.keys(players).forEach(id => playerActions.createPlayer(players[id])) )
 
     //new player
     socket.on('newPlayerConnected', (player) => { 
-      playerActions.createOthersPlayers(player);
+      playerActions.createPlayer(player);
     })
 
     //player disconnected
     socket.on('playerDisconnected', (playerId) => { 
-      console.log(self.textGroup.children)
       playerActions.destroyPlayer(playerId)
     });
 
-    socket.on('playerMoved', (playerData) => {
-       const player = self.otherPlayers.getChildren().find(player => player.id === playerData.id);
-       if(!player) return false 
-       player.setPosition(playerData.x, playerData.y);
-    })
+    socket.on('playerMoved', (playerData) => playerActions.findPlayerSprite(playerData.id).setPosition(playerData.x, playerData.y))
 
     
 }
