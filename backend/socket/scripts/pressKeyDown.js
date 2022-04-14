@@ -8,6 +8,10 @@ const pressKeyDown = ({socket, io}) => {
         ArrowDown: 'down',
         ArrowLeft: 'left',
         ArrowRight: 'right',
+        up: 'up',
+        down: 'down',
+        left: 'left',
+        right: 'right',
     }
 
     socket.on('playerPressKeyDown', ({event, key}) => {

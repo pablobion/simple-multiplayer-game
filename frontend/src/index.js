@@ -9,6 +9,10 @@ import CreateGroupsPhaser from "./groups/index"
 //actions 
 import playerMovement from './events/actions/playerMovement'
 
+//plugin
+import VirtualJoystick from 'phaser3-rex-plugins/plugins/virtualjoystick.js';
+
+
 const config = {
     type: Phaser.AUTO,
     parent: 'phaser-example',
@@ -26,7 +30,7 @@ const config = {
       preload: preload,
       create: create,
       update: update
-    }
+    },
 }
 
 const game = new Phaser.Game(config);
@@ -53,7 +57,7 @@ function create() {
   playerMovement(self)
 
 
-  
+
 }
 
 function update() {
@@ -64,6 +68,10 @@ function update() {
     const player = self.otherPlayers.getChildren().find(player => player.id === elem.id)
     elem.setPosition(player.x, player.y).setOrigin(0.5,3)
   })
+
+
+  let url = 'https://raw.githubusercontent.com/rexrainbow/phaser3-rex-notes/master/dist/rexvirtualjoystickplugin.min.js';
+  this.load.plugin('rexvirtualjoystickplugin', url, true);
 }
 
 
