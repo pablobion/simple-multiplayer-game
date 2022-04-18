@@ -15,6 +15,7 @@ const pressKeyDown = ({socket, io}) => {
     }
 
     socket.on('playerPressKeyDown', ({event, key}) => {
+        console.log('slc')
         if(movementKeys[key]){
             const {x,y,id} = Players('move')(socket.id, movementKeys[key])
             io.emit('playerMoved', {x,y,id})

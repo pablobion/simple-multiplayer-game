@@ -1,6 +1,5 @@
 //actions
 import PlayerActions from "../../events/entities/createPlayers"
-import CreateGroupsPhaser from "../../groups/index"
 
 export default (self) => {
     const playerActions = PlayerActions(self);
@@ -8,7 +7,7 @@ export default (self) => {
     const socket = self.socket;
 
     //listen to the server
-    socket.on('connect', () => console.log('connected'))
+    socket.on('connect', () => console.log('connected...'))
 
     //return list of players
     socket.on('currentPlayers', (players) => Object.keys(players).forEach(id => playerActions.createPlayer(players[id])) )
@@ -20,6 +19,7 @@ export default (self) => {
 
     //player disconnected
     socket.on('playerDisconnected', (playerId) => { 
+      console.log('to you');
       playerActions.destroyPlayer(playerId)
     });
 

@@ -13,10 +13,11 @@ app.use(cors())
 let server = http.Server(app);
 let io = socketIO(server, {
     cors: {
-        origin: true,
+        origins: ["https://61e4-2804-14d-ba86-a2e0-ac7d-7f7-bdd1-3a3f.ngrok.io", "http://localhost:3000"],
         methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     }
 });
+
 
 app.get('/players', (req, res) => {
     res.json( Players('actives')())

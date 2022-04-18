@@ -1,6 +1,7 @@
 
 
 export default (self) => {
+    self.ui = {};
     self.otherPlayers = self.physics.add.group();
     self.textGroup = self.add.group();
 

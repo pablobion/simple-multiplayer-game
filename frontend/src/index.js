@@ -1,4 +1,7 @@
-import Phaser, { Plugins } from 'phaser';
+import Phaser from 'phaser';
+import logoImg from './assets/logo.png';
+import carImage from './assets/car.png'
+import io from 'socket.io-client'
 
 //connections
 import ConnectionWithServer from "./connection/index"
@@ -9,9 +12,8 @@ import CreateGroupsPhaser from "./groups/index"
 //actions 
 import playerMovement from './events/actions/playerMovement'
 
-//plugin
-import VirtualJoystick from 'phaser3-rex-plugins/plugins/virtualjoystick.js';
-
+//update
+import playerMovementUpdate from './events/update/playerMovement'
 
 const config = {
     type: Phaser.AUTO,
@@ -33,45 +35,48 @@ const config = {
     },
 }
 
+
 const game = new Phaser.Game(config);
 
-function preload() {
-  this.load.image('ship', require('./assets/car.png').default);
 
-  //   this.load.scripts('inspector', [
-  //   'https://cdn.jsdelivr.net/npm/tweakpane@3.0.5/dist/tweakpane.js',
-  //   'https://cdn.jsdelivr.net/npm/phaser-plugin-inspector@1.5.0/dist/phaser-plugin-inspector.umd.js',
-  // ]);
-  // this.load.once('complete', () => {
-  //   PhaserPluginInspector.Install(this.plugins);
-  // });
+
+function preload ()
+{
+    this.load.image('logo', logoImg);
+    this.load.image('ship', carImage);
 }
-
+  
 function create() {
-  const self = this;
-  //start the game
+    const self = this;
+
+    // const logo = this.add.image(400, 150, 'logo');
+  
+    // this.tweens.add({
+    //     targets: logo,
+    //     y: 450,
+    //     duration: 2000,
+    //     ease: "Power2",
+    //     yoyo: true,
+    //     loop: -1
+    // });
+
+    CreateGroupsPhaser(self) //create group of sprites and object game
+  ConnectionWithServer(self) //connection to the server
+
+
+  self.keyboardCursors = this.input.keyboard.createCursorKeys();
 
   
-  CreateGroupsPhaser(self) //create group of sprites and object game
-  ConnectionWithServer(self) //connection to the server
   playerMovement(self)
-
-
-
 }
 
-function update() {
+function update(){
   const self = this;
- 
-  const teste = self.textGroup.getChildren()
-  teste.forEach(elem => {
-    const player = self.otherPlayers.getChildren().find(player => player.id === elem.id)
-    elem.setPosition(player.x, player.y).setOrigin(0.5,3)
-  })
 
 
-  let url = 'https://raw.githubusercontent.com/rexrainbow/phaser3-rex-notes/master/dist/rexvirtualjoystickplugin.min.js';
-  this.load.plugin('rexvirtualjoystickplugin', url, true);
+
+  playerMovementUpdate(self)
 }
+
 
 

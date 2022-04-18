@@ -33,9 +33,9 @@ const PlayerActions = (self) => {
     }
 
     return {
-        createPlayer, 
+        createPlayer,
         destroyPlayer,
-        findPlayerSprite
+        findPlayerSprite,
     }
 }
 

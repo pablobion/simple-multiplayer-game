@@ -8,6 +8,11 @@ module.exports = merge(base, {
   output: {
     filename: "bundle.min.js"
   },
+  devServer: {
+    compress: true,
+    disableHostCheck: true,   // That solved it
+
+ },
   devtool: false,
   performance: {
     maxEntrypointSize: 900000,
