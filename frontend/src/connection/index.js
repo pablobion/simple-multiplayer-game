@@ -3,7 +3,7 @@ import SocketPlayers from "./socket/players"
 
 export default (self) => {
     //connect with backend
-    self.socket = io( 'http://localhost:3000' );
+    self.socket = io( 'https://game-pablo.herokuapp.com' );
 
     SocketPlayers(self); //Players socket connection actions
   
