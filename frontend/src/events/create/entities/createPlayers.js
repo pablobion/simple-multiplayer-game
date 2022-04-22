@@ -6,19 +6,17 @@ const PlayerActions = (self) => {
          ).setOrigin(0.5);
 
          const nameObj = self.add.existing(nameObjText)
-         nameObj.id = player.id
-        self.textGroup.add(nameObjText)
+         nameObj.playerId = player.id
+        self.playersNameGroup.add(nameObjText)
         
         return nameObj
     }
 
-    const findPlayerSprite = (playerId) => self.otherPlayers.getChildren().find(player => player.id === playerId)
-
     const createPlayer = (playerData) => {
         //create other players
         const player = self.add.sprite(playerData.x, playerData.y, 'ship').setOrigin(0.5, 0.5).setDisplaySize(53, 40);
-        player.id = playerData.id;
-        self.otherPlayers.add(player);  
+        player.playerId = playerData.id;
+        self.playersGroup.add(player);  
         
         player.setInteractive();
 
@@ -28,15 +26,8 @@ const PlayerActions = (self) => {
        
     }
 
-    const destroyPlayer = (playerId) => {
-        const groups = ['otherPlayers', 'textGroup']
-        groups.forEach(element => self[element].getChildren().find(player => player.id === playerId).destroy());
-    }
-
     return {
-        createPlayer,
-        destroyPlayer,
-        findPlayerSprite,
+        createPlayer
     }
 }
 

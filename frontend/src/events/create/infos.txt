@@ -1,0 +1,2 @@
+-- Infos props player sprite
+playerId = id do player na sprite
