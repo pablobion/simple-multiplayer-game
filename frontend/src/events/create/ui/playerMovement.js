@@ -8,7 +8,7 @@ export default (self) => {
             y,
             base: self.add.circle(0, 0, 100, 0x888888),
             thumb: self.add.circle(0, 0, 50, 0xcccccc),
-            dir: '4dir', 
+            dir: '8dir', 
             // forceMin: 1,
             // forceMax: 2,
             enable: true
@@ -28,6 +28,7 @@ export default (self) => {
     self.ui.movementJoyStick = movementJoyStick
     
     const keys = movementJoyStick.createCursorKeys();
+
     Object.keys(keys).forEach(key => keys[key].on('down', () => {
       moveByTouch(key, 'pressDown')
       movementJoyStick.direction = key;
@@ -36,12 +37,7 @@ export default (self) => {
     self.keyboardCursors = self.input.keyboard.createCursorKeys();
 
 
-    self.input.keyboard.on('keydown', (event) => { 
-      self.socket.emit('playerPressKeyDown', {
-            event,
-            key: event.key,
-      })
-});
+  
 
     // self.input.on('pointerdown', (pointer) => {
     //     if (pointer.x <= self.cameras.main.width * 0.3) {

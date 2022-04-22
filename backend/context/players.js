@@ -33,9 +33,8 @@ const Players = (action) => {
 
     const playerMovement = ({playerId, direction}) => {
         if(!playerId || !direction) return needsParams('playerId', 'direction');
-        console.log(`${playerId} | ${direction}`)
         const player = findPlayer(playerId);
-        player.direction = direction;
+
         const pixels = 10;
         
         const move = {

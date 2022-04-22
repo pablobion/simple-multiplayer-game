@@ -5,9 +5,10 @@ const PlayerActions = (self) => {
              { font: "16px Arial", fill: '#' + ((0.5 + 0.5 * Math.random()) * 0xFFFFFF << 0).toString(16) }
          ).setOrigin(0.5);
 
-        const nameObj = self.add.existing(nameObjText)
-        nameObj.id = player.id
- 
+         const nameObj = self.add.existing(nameObjText)
+         nameObj.id = player.id
+        self.textGroup.add(nameObjText)
+        
         return nameObj
     }
 
@@ -23,8 +24,8 @@ const PlayerActions = (self) => {
 
         player.on('pointerdown', (elem) => {player.setTint(0xB95022)})
 
-        const name = createName(playerData)
-        self.textGroup.add(name)
+        createName(playerData)
+       
     }
 
     const destroyPlayer = (playerId) => {

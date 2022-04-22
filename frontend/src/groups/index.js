@@ -7,7 +7,6 @@ export default (self) => {
 
     const searchObjectGame = (group) => {
         const player = self[group].getChildren().find(player => player.playerId === self.socket.id);
-        console.log(player)
         return player;
     }
 

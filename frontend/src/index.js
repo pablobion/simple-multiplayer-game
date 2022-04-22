@@ -1,7 +1,10 @@
-import Phaser from 'phaser';
-import logoImg from './assets/logo.png';
-import carImage from './assets/car.png'
-import io from 'socket.io-client'
+import Phaser from "phaser"
+import logoImg from "./assets/logo.png"
+import carImage from "./assets/car.png"
+
+import { io } from "socket.io-client";
+
+import PlayerActions from "./connection/socket/players"
 
 //connections
 import ConnectionWithServer from "./connection/index"
@@ -9,48 +12,47 @@ import ConnectionWithServer from "./connection/index"
 //groups sprites
 import CreateGroupsPhaser from "./groups/index"
 
-//actions 
-import playerMovement from './events/actions/playerMovement'
+//create
+import gameCreate from './events/create/index'
 
 //update
-import playerMovementUpdate from './events/update/playerMovement'
+import gameUpdate from "./events/update/index"
 
 const config = {
     type: Phaser.AUTO,
-    parent: 'phaser-example',
+    parent: "phaser-example",
     width: 800,
     height: 600,
-    backgroundColor: '#000',
+    backgroundColor: "#000",
+    frame: 60,
     physics: {
-      default: 'arcade',
-      arcade: {
-        debug: true,
-        gravity: { y: 0 }
-      }
+        default: "arcade",
+        arcade: {
+            debug: true,
+            gravity: { y: 0 },
+        },
     },
     scene: {
-      preload: preload,
-      create: create,
-      update: update
+        preload: preload,
+        create: create,
+        update: update
     },
 }
 
+const game = new Phaser.Game(config)
 
-const game = new Phaser.Game(config);
+function preload() {
+    this.load.image("logo", logoImg)
+    this.load.image("ship", carImage)
 
-
-
-function preload ()
-{
-    this.load.image('logo', logoImg);
-    this.load.image('ship', carImage);
 }
-  
-function create() {
-    const self = this;
 
-    // const logo = this.add.image(400, 150, 'logo');
-  
+
+function create() {
+    const self = this
+    // self.logo = this.add.image(400, 150, 'logo');
+    //self.logo = this.physics.add.sprite(400, 150, 'logo');
+
     // this.tweens.add({
     //     targets: logo,
     //     y: 450,
@@ -59,24 +61,14 @@ function create() {
     //     yoyo: true,
     //     loop: -1
     // });
-
     CreateGroupsPhaser(self) //create group of sprites and object game
-  ConnectionWithServer(self) //connection to the server
-
-
-  self.keyboardCursors = this.input.keyboard.createCursorKeys();
-
-  
-  playerMovement(self)
+    gameCreate(self)
+    ConnectionWithServer(self) //connection to the server
 }
 
-function update(){
-  const self = this;
+function update() {
+    const self = this
+    gameUpdate(self)
 
 
-
-  playerMovementUpdate(self)
 }
-
-
-
