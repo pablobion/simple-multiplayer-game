@@ -14,12 +14,21 @@ const PlayerActions = (self) => {
 
     const createPlayer = (playerData) => {
         //create other players
-        const player = self.add.sprite(playerData.x, playerData.y, 'ship').setOrigin(0.5, 0.5).setDisplaySize(53, 40);
+        const player = self.add.sprite(playerData.x, playerData.y, 'player');
         player.playerId = playerData.id;
+        player.setDepth(2);
+        player.scale = 3;
+        player.setOrigin(0.5, 1);
+   
+
+        if(playerData.id === self.socket.id){
+            self.cameras.main.startFollow(player);
+            self.cameras.main.roundPixels = true;
+        }
+
         self.playersGroup.add(player);  
         
         player.setInteractive();
-
         player.on('pointerdown', (elem) => {player.setTint(0xB95022)})
 
         createName(playerData)
