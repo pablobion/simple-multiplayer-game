@@ -36,6 +36,7 @@
   },
   "dependencies": {
     "gh-pages": "^3.2.3",
+    "grid-engine": "^2.15.0",
     "phaser": "^3.50.0",
     "phaser3-rex-plugins": "^1.1.68",
     "socket.io-client": "^4.4.1"

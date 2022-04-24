@@ -23,6 +23,7 @@ export default (self) => {
     });
 
     self.socket.on('playerMoved', (playerData) => {
+     
       utils.findSpritesByPlayerId({group: 'playersGroup', playerId: playerData.id}).setPosition(playerData.x, playerData.y)
       utils.findSpritesByPlayerId({group: 'playersNameGroup', playerId: playerData.id}).setPosition(playerData.x, playerData.y-40)
       
