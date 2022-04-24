@@ -1,4 +1,8 @@
+//context
+import Context from '../../context/players'
+
 const PlayerActions = (self) => {
+    const context = Context(self);
 
     const createName = (player) => {
          const nameObjText = new Phaser.GameObjects.Text(self, player.x, player.y -40, player.name,
@@ -32,8 +36,12 @@ const PlayerActions = (self) => {
         player.on('pointerdown', (elem) => {player.setTint(0xB95022)})
 
         createName(playerData)
+
+        context.addPlayerToGridConfigMap({id: playerData.id, sprite: player})
+       
        
     }
+
 
     return {
         createPlayer
@@ -41,4 +49,4 @@ const PlayerActions = (self) => {
 }
 
 
-module.exports = PlayerActions 
+export default PlayerActions

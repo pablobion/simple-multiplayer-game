@@ -2,12 +2,15 @@
 import PlayerActions from "../../events/create/entities/createPlayers"
 import Utils from '../../events/utils/index'
 
+
 export default (self) => {
     const playerActions = PlayerActions(self);
     const utils = Utils(self);
     
     // //listen to the server
-     self.socket.on('connect', () => console.log('connected...'))
+     self.socket.on('connect', () => {
+      console.log('connected...')
+    })
 
     //return list of players
     self.socket.on('currentPlayers', (players) => Object.keys(players).forEach(id => playerActions.createPlayer(players[id])) )

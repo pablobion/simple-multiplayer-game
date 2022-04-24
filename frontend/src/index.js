@@ -6,10 +6,6 @@ import tilesetMap from "./assets/cloud-city.json"
 import characters from "./assets/characters.png"
 
 
-import { io } from "socket.io-client";
-
-import PlayerActions from "./connection/socket/players"
-
 //connections
 import ConnectionWithServer from "./connection/index"
 
@@ -21,6 +17,8 @@ import gameCreate from './events/create/index'
 
 //update
 import gameUpdate from "./events/update/index"
+
+import world from '../src/events/create/world/index'
 
 const config = {
     type: Phaser.AUTO,
@@ -70,50 +68,16 @@ function preload() {
 function create() {
     const self = this
 
-    const cloudCityTilemap = this.make.tilemap({ key: "cloud-city-map" });
-
-    cloudCityTilemap.addTilesetImage("Cloud City", "tiles");
-    for (let i = 0; i < cloudCityTilemap.layers.length; i++) {
-      const layer = cloudCityTilemap
-        .createLayer(i, "Cloud City", 100, 100)
-      layer.setDepth(i);
-      layer.scale = 3;
-    }
-
-
-
-
-
-  
-
-    
-    // self.logo = this.add.image(400, 150, 'logo');
-    //self.logo = this.physics.add.sprite(400, 150, 'logo');
-
-    // this.tweens.add({
-    //     targets: logo,
-    //     y: 450,
-    //     duration: 2000,
-    //     ease: "Power2",
-    //     yoyo: true,
-    //     loop: -1
-    // });
     CreateGroupsPhaser(self) //create group of sprites and object game
     gameCreate(self)
     ConnectionWithServer(self) //connection to the server
+    world(self).createMap(); //criando tiledmap
 }
 
 function update() {
     const self = this
     gameUpdate(self)
 
-
-}
-
-function render() {
-
-  game.debug.cameraInfo(game.camera, 32, 32);
-  game.debug.spriteCoords(player, 32, 500);
 
 }
 
