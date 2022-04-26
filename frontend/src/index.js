@@ -5,6 +5,7 @@ import tileset from "./assets/cloud_tileset.png"
 import tilesetMap from "./assets/cloud-city.json"
 import characters from "./assets/characters.png"
 
+import GridEngine from 'grid-engine'
 
 //connections
 import ConnectionWithServer from "./connection/index"
@@ -19,6 +20,8 @@ import gameCreate from './events/create/index'
 import gameUpdate from "./events/update/index"
 
 import world from '../src/events/create/world/index'
+
+import Context from '../src/events/context/players'
 
 const config = {
     type: Phaser.AUTO,
@@ -40,6 +43,15 @@ const config = {
             gravity: { y: 0 },
         },
     },
+    plugins: {
+        scene: [
+          {
+            key: "gridEngine",
+            plugin: GridEngine,
+            mapping: "gridEngine",
+          },
+        ],
+      },
     scene: {
         preload: preload,
         create: create,
@@ -48,8 +60,6 @@ const config = {
 }
 
 const game = new Phaser.Game(config)
-game.TILE_SIZE = 48;
-
 
 function preload() {
     this.load.image("logo", logoImg)
@@ -66,18 +76,26 @@ function preload() {
 
 
 function create() {
-    const self = this
+    
+    const self = this;
+
+    world(self).createMap(); //criando tiledma
+    ConnectionWithServer(self) //connection to the server
 
     CreateGroupsPhaser(self) //create group of sprites and object game
     gameCreate(self)
-    ConnectionWithServer(self) //connection to the server
-    world(self).createMap(); //criando tiledmap
+
+       
+   
 }
 
 function update() {
     const self = this
+   
     gameUpdate(self)
 
+    
+    
 
 }
 

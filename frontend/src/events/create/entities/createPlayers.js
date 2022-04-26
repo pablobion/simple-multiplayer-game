@@ -18,7 +18,7 @@ const PlayerActions = (self) => {
 
     const createPlayer = (playerData) => {
         //create other players
-        const player = self.add.sprite(playerData.x, playerData.y, 'player');
+        const player = self.add.sprite(playerData.x * 24, playerData.y * 24, 'player');
         player.playerId = playerData.id;
         player.setDepth(2);
         player.scale = 3;
@@ -35,11 +35,12 @@ const PlayerActions = (self) => {
         player.setInteractive();
         player.on('pointerdown', (elem) => {player.setTint(0xB95022)})
 
-        createName(playerData)
+        //createName(playerData)
 
-        context.addPlayerToGridConfigMap({id: playerData.id, sprite: player})
+
+        
        
-       
+        return player;
     }
 
 

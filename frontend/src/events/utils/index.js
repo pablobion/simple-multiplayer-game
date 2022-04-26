@@ -5,7 +5,7 @@
         }
 
         const destroySpriteByPlayerId = ({group, playerId, allGroups = 'false'}) => {
-            const groups = ['playersGroup', 'playersNameGroup']
+            const groups = ['playersGroup']
 
             allGroups 
             ? groups.forEach(element => self[element].getChildren().find(player => player.playerId === playerId).destroy()) 

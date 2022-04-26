@@ -1,6 +1,7 @@
 
 export default (self) => {
 
+
     if(self?.ui?.movementJoyStick?.force > 0){
         self.socket.emit('playerPressKeyDown', {
           event : self.ui.movementJoyStick.direction,
@@ -9,7 +10,8 @@ export default (self) => {
     }
 
     const keysKeyboard = Object.keys(self.keyboardCursors);
-    
+
+   
 
     for(let i = 0; i < keysKeyboard.length; i++) {
         if(self.keyboardCursors[keysKeyboard[i]].isDown) {
@@ -18,8 +20,9 @@ export default (self) => {
                 key: keysKeyboard[i],
             })
         }
-  }
- 
-    
     }
+
+ 
+ 
+}
 

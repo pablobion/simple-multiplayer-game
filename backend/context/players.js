@@ -17,8 +17,8 @@ const Players = (action) => {
         return {
             id,
             name,
-            x: Math.floor(Math.random() *100)+400,
-            y: Math.floor(Math.random() *500),
+            x: 12,
+            y: 12,
             direction: 'right',
             speed: 1,
             isMoving: false,
@@ -31,11 +31,19 @@ const Players = (action) => {
         return playersList[id];
     } 
 
+    function debounce(func, wait) {
+        let timer = null;
+        return function() {
+            clearTimeout(timer);
+            timer = setTimeout(func, wait);
+        }
+    }
+
     const playerMovement = ({playerId, direction}) => {
         if(!playerId || !direction) return needsParams('playerId', 'direction');
         const player = findPlayer(playerId);
-
-        const pixels = 10;
+        console.log(direction)
+        const pixels = 1;
         
         const move = {
             up: () => player.y -= pixels,
@@ -44,7 +52,11 @@ const Players = (action) => {
             right: () => player.x += pixels
         };
 
-        move[direction]();
+        
+            move[direction]();
+        
+
+       
 
         return playersList[player.id];
     }
