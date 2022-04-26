@@ -10,8 +10,9 @@ export default (self) => {
     }
 
     const keysKeyboard = Object.keys(self.keyboardCursors);
+    
 
-   
+
 
     for(let i = 0; i < keysKeyboard.length; i++) {
         if(self.keyboardCursors[keysKeyboard[i]].isDown) {
