@@ -5,7 +5,7 @@ export default (self) => {
     //connect with backend
     const prod = 'https://game-pablo.herokuapp.com';
     const dev = 'http://localhost:3000';
-    self.socket = io( dev );
+    self.socket = io( prod );
     
     SocketPlayers(self); //Players socket connection actions
   
