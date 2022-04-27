@@ -35,11 +35,21 @@ export default (self) => {
         self.gridEngine.setPosition(id, {x,y})
     }
 
+    const getPosition = (id) => {
+        return self.gridEngine.getPosition(id)
+    } 
+
     const removePlayerFromGridConfigMap = (playerId) => {
         characters.splice(characters.findIndex(player => player.id === playerId), 1)
     }
 
   
 
-    return {addPlayerToGridConfigMap, removePlayerFromGridConfigMap, updateCharacterPosition, gridEngineConfig}
+    return {
+        addPlayerToGridConfigMap, 
+        removePlayerFromGridConfigMap, 
+        updateCharacterPosition, 
+        gridEngineConfig,
+        getPosition
+    }
 }

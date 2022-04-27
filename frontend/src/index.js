@@ -85,8 +85,7 @@ function create() {
     CreateGroupsPhaser(self) //create group of sprites and object game
     gameCreate(self)
 
-       
-   
+
 }
 
 function update() {
@@ -94,8 +93,9 @@ function update() {
    
     gameUpdate(self)
 
-    
-    
+
+
+
 
 }
 

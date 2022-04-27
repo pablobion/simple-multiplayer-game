@@ -16,12 +16,12 @@ const pressKeyDown = ({socket, io}) => {
 
     socket.on('playerPressKeyDown', ({event, key}) => {
         if(movementKeys[key]){
-            const { x, y, id } = Players('move')(socket.id, movementKeys[key])
-            
+            const player = Players('move')(socket.id, movementKeys[key])
+            if(!player) return
             io.emit('playerMoved', {
-                x,
-                y,
-                id,
+                x: player.x,
+                y: player.y,
+                id: player.id,
                 moveDirection: movementKeys[key]
             })
         }

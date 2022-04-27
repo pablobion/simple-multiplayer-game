@@ -43,7 +43,14 @@ const Players = (action) => {
         if(!playerId || !direction) return needsParams('playerId', 'direction');
         const player = findPlayer(playerId);
         console.log(direction)
-        const pixels = 1;
+        let pixels = 1;
+
+        const isMoving = playersList[player.id].isMoving
+
+        if(isMoving) return
+
+        playersList[player.id].isMoving = true;
+        setTimeout(() => playersList[player.id].isMoving = false, 250)
         
         const move = {
             up: () => player.y -= pixels,

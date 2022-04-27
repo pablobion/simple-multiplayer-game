@@ -35,8 +35,12 @@ export default (self) => {
     });
 
     self.socket.on('playerMoved', (playerData) => {
-      self.gridEngine.move(playerData.id, playerData.moveDirection);
-      context.updateCharacterPosition({id: playerData.id, x :playerData.x,  y: playerData.y})
+      const {x, y} = context.getPosition(playerData.id);
+     
+     
+      self.gridEngine.moveTo(playerData.id, {x: playerData.x, y: playerData.y});
+      //self.gridEngine.move(playerData.id, playerData.moveDirection);
+     // context.updateCharacterPosition({id: playerData.id, x :playerData.x,  y: playerData.y})
      
    
     
